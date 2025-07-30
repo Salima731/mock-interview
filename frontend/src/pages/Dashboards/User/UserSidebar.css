@@ -1,0 +1,13 @@
+.user-sidebar {
+  width: 220px;
+  min-height: 100vh;
+}
+
+.user-sidebar .nav-link:hover {
+  background: #1f1f1f;
+  border-radius: 4px;
+}
+
+.user-sidebar button {
+  width: 100%;
+}

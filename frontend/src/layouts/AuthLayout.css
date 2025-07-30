@@ -1,0 +1,8 @@
+.auth-layout {
+  display: flex;
+}
+
+.auth-layout main {
+  flex-grow: 1;
+  background: #f8f9fa;
+}

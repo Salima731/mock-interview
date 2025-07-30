@@ -1,0 +1,27 @@
+.user-avatar-img {
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.user-avatar-img:hover {
+  transform: scale(1.05);
+}
+
+.user-avatar-fallback {
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1ea447, #0e7c2f);
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.user-avatar-fallback:hover {
+  transform: scale(1.05);
+}

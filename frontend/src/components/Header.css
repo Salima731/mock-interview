@@ -1,0 +1,64 @@
+/* Header.css */
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Main Navbar Styling */
+.main-navbar {
+  background: linear-gradient(135deg, #0f0f0f, #02211e);
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  z-index: 1030;
+}
+
+.navbar-logo {
+  height: 70px;
+  width: auto;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: #F1C232;
+  margin-left: 8px;
+}
+
+/* Navigation Links */
+.nav-link {
+  color: #ffffff !important;
+  font-weight: 500;
+  margin: 0 10px;
+  font-size: 1rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* .nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background-color: #f9f4f4;
+  left: 0;
+  bottom: -4px;
+  transition: width 0.3s ease-in-out;
+} */
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #32f1d7 !important;
+}
+
+/* User Dropdown Spacing */
+.user-dropdown {
+  margin-left: 10px;
+}
+
+

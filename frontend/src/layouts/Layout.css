@@ -1,0 +1,33 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.admin-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f4f6f8;
+}
+
+.admin-header {
+  background: #fff;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  justify-content: space-between;
+}
+
+.menu-btn {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.admin-main {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+}

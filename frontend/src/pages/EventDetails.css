@@ -1,0 +1,17 @@
+.event-details img {
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.event-details h2 {
+    font-size: 2.5rem;
+}
+
+.event-details h4 {
+    margin-top: 1.5rem;
+    font-weight: bold;
+}
+
+.event-details .btn {
+    min-width: 120px;
+}
