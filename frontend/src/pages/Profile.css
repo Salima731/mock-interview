@@ -9,7 +9,7 @@
   width: 120px;
   height: 120px;
   object-fit: cover;
-  border: 4px solid #ffc107;
+  border: 4px solid #eef3f2;
   background-color: #dad7d7;
   transition: transform 0.3s ease;
 }
@@ -26,10 +26,10 @@
 }
 
 .profile-tabs .nav-link {
-  color: #717171;
+  color: #0c0202;
   transition: background 0.3s ease;
 }
 
 .profile-tabs .nav-link:hover {
-  background-color: #c8c7c5;
+  background-color: #1c1c1b;
 }

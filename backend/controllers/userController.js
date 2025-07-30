@@ -5,35 +5,77 @@ const deleteImages = require("../utils/deleteImages");
 
 
 
+// exports.userRegister = async (req, res) => {
+//     try {
+//         const { username, email, password } = req.body;
+//         console.log("req.bodyyy", req.body);
+        
+//         const profilePhoto = req.file ? `uploads/users/${req.file.filename}` : '';
+
+//         if (!username || !email || !password) {
+//             if (profilePhoto) await deleteImages(profilePhoto);
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "Please enter all data"
+//             })
+//         }
+
+//         const existingUser = await User.findOne({ email });
+//         if (existingUser) {
+//             if (profilePhoto) await deleteImages(profilePhoto);
+//             return res.status(409).json({  //409 (Conflict) such as duplicate email registration.
+//                 success: false,
+//                 message: "Email is already registered."
+//             })
+//         }
+
+//         const newUser = new User({
+//             username,
+//             email,
+//             password,
+//             profilePhoto
+//         });
+
+//         const user = await newUser.save();
+
+//         return res.status(201).json({
+//             success: true,
+//             message: "User registered successfully.",
+//             user
+//         })
+//     } catch (error) {
+//         if (req.file) await deleteImages(`uploads/users/${req.file.filename}`);
+//         res.status(500).json({
+//             success: false,
+//             message: error.message
+//         })
+//     }
+// }
+
 exports.userRegister = async (req, res) => {
     try {
         const { username, email, password } = req.body;
         console.log("req.bodyyy", req.body);
-        
-        const profilePhoto = req.file ? `uploads/users/${req.file.filename}` : '';
 
         if (!username || !email || !password) {
-            if (profilePhoto) await deleteImages(profilePhoto);
             return res.status(400).json({
                 success: false,
                 message: "Please enter all data"
-            })
+            });
         }
 
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            if (profilePhoto) await deleteImages(profilePhoto);
             return res.status(409).json({  //409 (Conflict) such as duplicate email registration.
                 success: false,
                 message: "Email is already registered."
-            })
+            });
         }
 
         const newUser = new User({
             username,
             email,
-            password,
-            profilePhoto
+            password
         });
 
         const user = await newUser.save();
@@ -42,16 +84,14 @@ exports.userRegister = async (req, res) => {
             success: true,
             message: "User registered successfully.",
             user
-        })
+        });
     } catch (error) {
-        if (req.file) await deleteImages(`uploads/users/${req.file.filename}`);
         res.status(500).json({
             success: false,
             message: error.message
-        })
+        });
     }
-}
-
+};
 
 exports.userLogin = async (req, res) => {
     try {
@@ -153,26 +193,77 @@ exports.getUserProfile = async (req, res) => {
     }
 }
 
+// exports.updateUserProfile = async (req, res) => {
+//     try {
+//         const userId = req.userId;
+//         const { username, email } = req.body;
+//         const newProfilePhoto = req.file ? `uploads/users/${req.file.filename}` : '';
+
+//         const user = await User.findById(userId);
+//         if (!user) {
+//             if (newProfilePhoto) await deleteImages(newProfilePhoto);
+//             return res.status(404).json({
+//                 success: false,
+//                 message: "User not found."
+//             });
+//         }
+
+//         //Prevents multiple users from registering or updating to the same email address.
+//         if (email && email !== user.email) {    // Check if email is being updated and ensure uniqueness
+//             const emailExists = await User.findOne({ email });
+//             if (emailExists) {
+//                 if (newProfilePhoto) await deleteImages(newProfilePhoto);
+//                 return res.status(409).json({
+//                     success: false,
+//                     message: "Email already in use."
+//                 });
+//             }
+//         }
+
+//         if (newProfilePhoto) {  //// Replace profile photo if a new one is uploaded
+//             if (user.profilePhoto) {
+//                 await deleteImages(user.profilePhoto)
+//             }
+//             user.profilePhoto = newProfilePhoto
+//         }
+
+//         if (username) user.username = username;
+//         if (email) user.email = email;
+
+//         const updatedUser = await user.save();
+//         const { password, ...userData } = updatedUser.toObject(); //Even though the password is hashed, it should never be returned to the frontend
+
+//         return res.status(200).json({
+//             success: true,
+//             message: "Profile updated successfully.",
+//             user: userData
+//         })
+//     } catch (error) {
+//         if (req.file) await deleteImages(`uploads/users/${req.file.filename}`);
+//         return res.status(500).json({
+//             success: false,
+//             message: error.message
+//         })
+//     }
+// }
+
 exports.updateUserProfile = async (req, res) => {
     try {
         const userId = req.userId;
         const { username, email } = req.body;
-        const newProfilePhoto = req.file ? `uploads/users/${req.file.filename}` : '';
 
         const user = await User.findById(userId);
         if (!user) {
-            if (newProfilePhoto) await deleteImages(newProfilePhoto);
             return res.status(404).json({
                 success: false,
                 message: "User not found."
             });
         }
 
-        //Prevents multiple users from registering or updating to the same email address.
-        if (email && email !== user.email) {    // Check if email is being updated and ensure uniqueness
+        // Prevent multiple users from using the same email address
+        if (email && email !== user.email) {
             const emailExists = await User.findOne({ email });
             if (emailExists) {
-                if (newProfilePhoto) await deleteImages(newProfilePhoto);
                 return res.status(409).json({
                     success: false,
                     message: "Email already in use."
@@ -180,32 +271,24 @@ exports.updateUserProfile = async (req, res) => {
             }
         }
 
-        if (newProfilePhoto) {  //// Replace profile photo if a new one is uploaded
-            if (user.profilePhoto) {
-                await deleteImages(user.profilePhoto)
-            }
-            user.profilePhoto = newProfilePhoto
-        }
-
         if (username) user.username = username;
         if (email) user.email = email;
 
         const updatedUser = await user.save();
-        const { password, ...userData } = updatedUser.toObject(); //Even though the password is hashed, it should never be returned to the frontend
+        const { password, ...userData } = updatedUser.toObject(); // Remove password from response
 
         return res.status(200).json({
             success: true,
             message: "Profile updated successfully.",
             user: userData
-        })
+        });
     } catch (error) {
-        if (req.file) await deleteImages(`uploads/users/${req.file.filename}`);
         return res.status(500).json({
             success: false,
             message: error.message
-        })
+        });
     }
-}
+};
 
 exports.updatePassword = async (req, res) => {
     try {
